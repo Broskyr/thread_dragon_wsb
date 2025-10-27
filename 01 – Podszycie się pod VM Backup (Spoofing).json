@@ -1,0 +1,140 @@
+{
+  "version": "2.0",
+  "summary": {
+    "title": "Backup Lab STRIDE – 01 – Podszycie się pod VM Backup (Spoofing)",
+    "owner": "Student",
+    "description": "Model pojedynczego zagrożenia STRIDE dla laboratorium: VM Prod, VM Backup, Repozytorium kopii.",
+    "date": "2025-10-27"
+  },
+  "detail": {
+    "contributors": [
+      "Student",
+      "ChatGPT"
+    ],
+    "diagrams": [
+      {
+        "id": "ffe8c824-0c4d-4158-b249-b2bd3f82769d",
+        "title": "Diagram 01 – Podszycie się pod VM Backup",
+        "diagramType": "STRIDE",
+        "cells": [
+          {
+            "id": "c7598e81-5a37-4591-b6b8-b7990581feb1",
+            "type": "tm.BoundaryBox",
+            "z": 0,
+            "position": {
+              "x": 10,
+              "y": 20
+            },
+            "size": {
+              "width": 640,
+              "height": 300
+            },
+            "attrs": {
+              "text": {
+                "text": "LAN / VLAN zaufana"
+              }
+            },
+            "boundary": {
+              "name": "LAN / VLAN zaufana",
+              "outOfScope": false,
+              "reasonOutOfScope": ""
+            }
+          },
+          {
+            "id": "9a4e8f38-46d7-4745-8a37-d1b72cb2424e",
+            "type": "tm.Process",
+            "z": 2,
+            "position": {
+              "x": 200,
+              "y": 80
+            },
+            "size": {
+              "width": 150,
+              "height": 120
+            },
+            "attrs": {
+              "text": {
+                "text": "VM Prod"
+              }
+            },
+            "node": {
+              "name": "VM Prod",
+              "outOfScope": false,
+              "reasonOutOfScope": ""
+            },
+            "properties": {
+              "privilegeLevel": "High"
+            },
+            "threats": []
+          },
+          {
+            "id": "4c9af08f-63a9-4063-9591-9db8790241ef",
+            "type": "tm.Process",
+            "z": 2,
+            "position": {
+              "x": 420,
+              "y": 80
+            },
+            "size": {
+              "width": 150,
+              "height": 120
+            },
+            "attrs": {
+              "text": {
+                "text": "VM Backup"
+              }
+            },
+            "node": {
+              "name": "VM Backup",
+              "outOfScope": false,
+              "reasonOutOfScope": ""
+            },
+            "properties": {
+              "privilegeLevel": "High"
+            },
+            "threats": [
+              {
+                "id": "6a6fd24f-b0e3-4c8e-987d-349ed2acf1f9",
+                "title": "Podszycie się pod VM Backup",
+                "type": "Spoofing",
+                "severity": "High",
+                "status": "Open",
+                "score": "",
+                "description": "Atakujący podszywa się pod host Backup i inicjuje nieautoryzowane żądania do VM Prod.",
+                "mitigation": "Mutual TLS/SSH, allowlist IP, ograniczenie kont serwisowych, monitoring anomalii."
+              }
+            ]
+          },
+          {
+            "id": "bad8d67d-25c0-46f3-aa46-686c9719c8ef",
+            "type": "tm.Flow",
+            "z": 3,
+            "source": {
+              "id": "9a4e8f38-46d7-4745-8a37-d1b72cb2424e"
+            },
+            "target": {
+              "id": "4c9af08f-63a9-4063-9591-9db8790241ef"
+            },
+            "vertices": [],
+            "attrs": {
+              "text": {
+                "text": "Transfer backupu (rsync/agent)"
+              }
+            },
+            "edge": {
+              "name": "Transfer backupu (rsync/agent)",
+              "description": "",
+              "protocol": "SSH/RSYNC",
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "isBidirectional": false,
+              "outOfScope": false,
+              "reasonOutOfScope": ""
+            },
+            "threats": []
+          }
+        ]
+      }
+    ]
+  }
+}
